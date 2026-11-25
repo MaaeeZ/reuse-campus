@@ -1,1 +1,126 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f6f9;
+  margin: 0;
+  color: #333;
+}
+.navbar {
+  background-color: #1b4332;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar a {
+  color: #d8f3dc;
+  text-decoration: none;
+  margin-right: 1.2rem;
+  font-weight: 500;
+}
+.user-badge {
+  background: #2d6a4f;
+  padding: 0.3rem 0.7rem;
+  border-radius: 12px;
+  margin-right: 0.8rem;
+  font-size: 0.9rem;
+}
+.container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 1.2rem;
+}
+input, textarea, select {
+  width: 100%;
+  padding: 0.6rem;
+  margin: 0.4rem 0 0.8rem 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+button {
+  padding: 0.55rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-right: 0.4rem;
+}
+.btn-primary { background: #2d6a4f; color: white; }
+.btn-success { background: #40916c; color: white; }
+.btn-danger { background: #d62828; color: white; }
+.btn-logout { background: #e63946; color: white; }
+
+.badge {
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-right: 0.4rem;
+}
+.modalidad { background: #e9ecef; color: #495057; }
+.disponible, .aceptada, .completada { background: #d8f3dc; color: #1b4332; }
+.reservada, .pendiente { background: #fff3b0; color: #7f5539; }
+.entregada { background: #caf0f8; color: #03045e; }
+.cancelada, .rechazada { background: #ffccd5; color: #800f2f; }
+
+.alert-error {
+  background: #ffccd5;
+  color: #800f2f;
+  padding: 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  border-left: 4px solid #d62828;
+}
+.alert-success {
+  background: #d8f3dc;
+  color: #1b4332;
+  padding: 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  border-left: 4px solid #2d6a4f;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.8rem;
+}
+th, td {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px solid #eee;
+}
+.login-card {
+  max-width: 420px;
+  margin: 3rem auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.demo-users {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
