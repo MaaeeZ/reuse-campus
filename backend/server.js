@@ -61,6 +61,37 @@ app.post('/api/publicaciones', verificarUsuario, async (req, res) => {
     }
 });
 
+// Editar publicación disponible (Completa el CRUD - Update)
+app.put('/api/publicaciones/:id', verificarUsuario, async (req, res) => {
+    const { id } = req.params;
+    const { titulo, descripcion, categoria, modalidad } = req.body;
+
+    if (!titulo || !descripcion || !categoria || !modalidad) {
+        return res.status(400).json({ error: 'Todos los campos son obligatorios.' });
+    }
+
+    try {
+        const [pubs] = await pool.query('SELECT * FROM publicaciones WHERE id = ?', [id]);
+        if (pubs.length === 0) return res.status(404).json({ error: 'Publicación no encontrada.' });
+
+        const pub = pubs[0];
+        if (pub.usuarioId !== req.usuario.id) {
+            return res.status(403).json({ error: 'Solo el propietario puede editar esta publicación.' });
+        }
+        if (pub.estado !== 'DISPONIBLE') {
+            return res.status(400).json({ error: 'Solo se pueden editar publicaciones en estado DISPONIBLE.' });
+        }
+
+        await pool.query(
+            'UPDATE publicaciones SET titulo = ?, descripcion = ?, categoria = ?, modalidad = ? WHERE id = ?',
+            [titulo, descripcion, categoria, modalidad, id]
+        );
+        res.json({ mensaje: 'Publicación actualizada correctamente.' });
+    } catch (err) {
+        res.status(500).json({ error: 'Error al actualizar la publicación.' });
+    }
+});
+
 app.put('/api/publicaciones/:id/cancelar', verificarUsuario, async (req, res) => {
     const { id } = req.params;
     try {

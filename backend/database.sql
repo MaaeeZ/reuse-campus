@@ -53,3 +53,85 @@ INSERT INTO usuarios (nombre, correo, password, rol, estado) VALUES
 ('Carlos Propietario', 'carlos@ipvg.cl', '123456', 'Usuario', 'ACTIVO'),
 ('Ana Solicitante', 'ana@ipvg.cl', '123456', 'Usuario', 'ACTIVO'),
 ('Luis Interesado', 'luis@ipvg.cl', '123456', 'Usuario', 'ACTIVO');
+
+INSERT INTO publicaciones (
+    titulo,
+    descripcion,
+    categoria,
+    modalidad,
+    estado,
+    fechaPublicacion,
+    usuarioId
+) VALUES
+(
+    'Libro Fundamentos de Bases de Datos',
+    'Texto impreso en buen estado, ideal para asignaturas de modelamiento relacional y SQL. Sin rayaduras importantes.',
+    'Libros y Apuntes',
+    'DONACION',
+    'DISPONIBLE',
+    '2026-11-20 10:15:00',
+    2
+),
+(
+    'Calculadora Científica Casio fx-82MS',
+    'Funciona perfectamente con pila nueva. La entrego con su tapa rígida protectora para clases o certámenes.',
+    'Electrónica',
+    'INTERCAMBIO',
+    'DISPONIBLE',
+    '2026-11-21 14:30:00',
+    2
+),
+(
+    'Mouse Inalámbrico Logitech M170',
+    'Mouse óptico compacto con receptor USB, ideal para llevar en el bolso al laboratorio o biblioteca.',
+    'Periféricos',
+    'DONACION',
+    'DISPONIBLE',
+    '2026-11-22 09:05:00',
+    3
+),
+(
+    'Apuntes Empastados de Redes y Comunicaciones',
+    'Guías de ejercicios, resumen de modelos OSI/TCP-IP y apuntes de subnetting del semestre pasado.',
+    'Libros y Apuntes',
+    'DONACION',
+    'DISPONIBLE',
+    '2026-11-23 16:40:00',
+    4
+),
+(
+    'Hub USB 3.0 de 4 Puertos',
+    'Adaptador metálico compacto para notebooks con pocos puertos. Lo intercambio por un cable HDMI o cuaderno universitario.',
+    'Electrónica',
+    'INTERCAMBIO',
+    'DISPONIBLE',
+    '2026-11-24 11:20:00',
+    3
+),
+(
+    'Mochila Urbana Negra Impermeable',
+    'Compartimento acolchado para notebook de hasta 15.6 pulgadas y bolsillos laterales. Tiene leve desgaste en una costura.',
+    'Accesorios',
+    'DONACION',
+    'RESERVADA',
+    '2026-11-18 17:50:00',
+    2
+),
+(
+    'Teclado Mecánico Compacto 60%',
+    'Switches táctiles en buen estado, incluye cable USB-C trenzado. Marcado como entregado tras coordinación en campus.',
+    'Periféricos',
+    'INTERCAMBIO',
+    'ENTREGADA',
+    '2026-11-15 13:10:00',
+    4
+),
+(
+    'Set de Destornilladores de Precisión',
+    'Kit de 24 puntas para mantención de notebooks y consolas. Publicación cancelada por cambio de planes.',
+    'Herramientas',
+    'DONACION',
+    'CANCELADA',
+    '2026-11-19 08:45:00',
+    1
+);

@@ -50,6 +50,10 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/publicaciones`, data, { headers: this.getHeaders() });
   }
 
+  editarPublicacion(id: number, data: Partial<Publicacion>): Observable<any> {
+    return this.http.put(`${this.apiUrl}/publicaciones/${id}`, data, { headers: this.getHeaders() });
+  }
+
   cancelarPublicacion(id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/publicaciones/${id}/cancelar`, {}, { headers: this.getHeaders() });
   }

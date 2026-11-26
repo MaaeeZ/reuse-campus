@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api.service';
 import { Solicitud, EntregaIntercambio } from '../../models/interfaces';
@@ -113,7 +113,7 @@ export class GestionesComponent implements OnInit {
   mensajeOk = '';
   mensajeError = '';
 
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.cargarTodo();
@@ -125,14 +125,26 @@ export class GestionesComponent implements OnInit {
 
     this.api.getSolicitudes().subscribe({
       next: (data) => {
-        this.solicitudesRecibidas = data.filter((s) => s.propietarioId === uid);
-        this.solicitudesEnviadas = data.filter((s) => s.solicitanteId === uid);
+        this.solicitudesRecibidas = data.filter((s) => Number(s.propietarioId) === Number(uid));
+        this.solicitudesEnviadas = data.filter((s) => Number(s.solicitanteId) === Number(uid));
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.mensajeError = err.error?.error || 'Error al cargar solicitudes.';
+        this.cdr.detectChanges();
       }
     });
 
     this.api.getEntregas().subscribe({
       next: (data) => {
-        this.misEntregas = data.filter((e) => e.propietarioId === uid || e.receptorId === uid);
+        this.misEntregas = data.filter(
+          (e) => Number(e.propietarioId) === Number(uid) || Number(e.receptorId) === Number(uid)
+        );
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.mensajeError = err.error?.error || 'Error al cargar entregas.';
+        this.cdr.detectChanges();
       }
     });
   }
@@ -145,37 +157,55 @@ export class GestionesComponent implements OnInit {
         this.mensajeOk = res.mensaje;
         this.cargarTodo();
       },
-      error: (err) => (this.mensajeError = err.error?.error || 'Error al aceptar.')
+      error: (err) => {
+        this.mensajeError = err.error?.error || 'Error al aceptar.';
+        this.cdr.detectChanges();
+      }
     });
   }
 
   rechazar(id: number) {
+    this.mensajeOk = '';
+    this.mensajeError = '';
     this.api.rechazarSolicitud(id).subscribe({
       next: (res) => {
         this.mensajeOk = res.mensaje;
         this.cargarTodo();
       },
-      error: (err) => (this.mensajeError = err.error?.error || 'Error al rechazar.')
+      error: (err) => {
+        this.mensajeError = err.error?.error || 'Error al rechazar.';
+        this.cdr.detectChanges();
+      }
     });
   }
 
   cancelarSol(id: number) {
+    this.mensajeOk = '';
+    this.mensajeError = '';
     this.api.cancelarSolicitud(id).subscribe({
       next: (res) => {
         this.mensajeOk = res.mensaje;
         this.cargarTodo();
       },
-      error: (err) => (this.mensajeError = err.error?.error || 'Error al cancelar.')
+      error: (err) => {
+        this.mensajeError = err.error?.error || 'Error al cancelar.';
+        this.cdr.detectChanges();
+      }
     });
   }
 
   completar(id: number) {
+    this.mensajeOk = '';
+    this.mensajeError = '';
     this.api.completarEntrega(id).subscribe({
       next: (res) => {
         this.mensajeOk = res.mensaje;
         this.cargarTodo();
       },
-      error: (err) => (this.mensajeError = err.error?.error || 'Error al completar entrega.')
+      error: (err) => {
+        this.mensajeError = err.error?.error || 'Error al completar entrega.';
+        this.cdr.detectChanges();
+      }
     });
   }
 }
