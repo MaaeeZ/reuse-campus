@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
@@ -41,34 +41,38 @@ import { Publicacion } from '../../models/interfaces';
 
     <!-- Listado de publicaciones -->
     <div class="grid">
-      <div *ngFor="let p of publicaciones" class="card item-card">
-        <div class="badges">
-          <span class="badge modalidad">{{ p.modalidad }}</span>
-          <span class="badge estado" [ngClass]="p.estado.toLowerCase()">{{ p.estado }}</span>
-        </div>
-        <h3>{{ p.titulo }}</h3>
-        <p>{{ p.descripcion }}</p>
-        <small>Categoría: {{ p.categoria }} | Publicado por: <strong>{{ p.propietarioNombre }}</strong></small>
-
-        <div class="actions" *ngIf="api.usuarioActual">
-          <!-- Solicitar (si no es dueño y está DISPONIBLE) -->
-          <div *ngIf="p.usuarioId !== api.usuarioActual.id && p.estado === 'DISPONIBLE'" class="solicitar-box">
-            <input type="text" [(ngModel)]="mensajesSolicitud[p.id]" placeholder="Escribe tu mensaje o propuesta..." />
-            <button (click)="solicitar(p.id)" class="btn-success">Solicitar</button>
+      @for (p of publicaciones(); track p.id) {
+        <div class="card item-card">
+          <div class="badges">
+            <span class="badge modalidad">{{ p.modalidad }}</span>
+            <span class="badge estado" [ngClass]="(p.estado || '').toLowerCase()">{{ p.estado }}</span>
           </div>
+          <h3>{{ p.titulo }}</h3>
+          <p>{{ p.descripcion }}</p>
+          <small>Categoría: {{ p.categoria }} | Publicado por: <strong>{{ p.propietarioNombre }}</strong></small>
 
-          <!-- Cancelar publicación propia si está DISPONIBLE -->
-          <button *ngIf="p.usuarioId === api.usuarioActual.id && p.estado === 'DISPONIBLE'"
-                  (click)="cancelarPub(p.id)" class="btn-danger">
-            Cancelar Publicación
-          </button>
+          <div class="actions" *ngIf="api.usuarioActual">
+            <!-- Solicitar (si no es dueño y está DISPONIBLE) -->
+            <div *ngIf="p.usuarioId !== api.usuarioActual.id && p.estado === 'DISPONIBLE'" class="solicitar-box">
+              <input type="text" [(ngModel)]="mensajesSolicitud[p.id]" placeholder="Escribe tu mensaje o propuesta..." />
+              <button (click)="solicitar(p.id)" class="btn-success">Solicitar</button>
+            </div>
+
+            <!-- Cancelar publicación propia si está DISPONIBLE -->
+            <button *ngIf="p.usuarioId === api.usuarioActual.id && p.estado === 'DISPONIBLE'"
+                    (click)="cancelarPub(p.id)" class="btn-danger">
+              Cancelar Publicación
+            </button>
+          </div>
         </div>
-      </div>
+      } @empty {
+        <p>No hay artículos para mostrar.</p>
+      }
     </div>
   `
 })
 export class CatalogoComponent implements OnInit {
-  publicaciones: Publicacion[] = [];
+  publicaciones = signal<Publicacion[]>([]);
   mostrarForm = false;
   mensajeOk = '';
   mensajeError = '';
@@ -87,12 +91,18 @@ export class CatalogoComponent implements OnInit {
     this.cargar();
   }
 
-  cargar() {
-    this.api.getPublicaciones().subscribe({
-      next: (data) => (this.publicaciones = data),
-      error: () => (this.mensajeError = 'No se pudo conectar con el servidor.')
-    });
-  }
+cargar() {
+  this.api.getPublicaciones().subscribe({
+    next: (data) => {
+      console.log('DATA:', data);
+      this.publicaciones.set(data);
+    },
+    error: (err) => {
+      console.error('ERROR GET PUBLICACIONES:', err);
+      this.mensajeError = 'No se pudo conectar con el servidor.';
+    }
+  });
+}
 
   crearPublicacion() {
     this.limpiarAlertas();
@@ -109,7 +119,7 @@ export class CatalogoComponent implements OnInit {
 
   solicitar(publicacionId: number) {
     this.limpiarAlertas();
-    const msg = this.mensajesSolicitud[publicacionId];
+    const msg = (this.mensajesSolicitud[publicacionId] || '').trim();
     if (!msg) {
       this.mensajeError = 'Escribe un mensaje antes de enviar la solicitud.';
       return;
