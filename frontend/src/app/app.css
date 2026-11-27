@@ -1,0 +1,43 @@
+.navbar {
+  background-color: #1b4332;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+}
+
+.navbar a {
+  color: #d8f3dc;
+  text-decoration: none;
+  margin-right: 1.2rem;
+  font-weight: 500;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+.user-badge {
+  background: #2d6a4f;
+  padding: 0.3rem 0.7rem;
+  border-radius: 12px;
+  margin-right: 0.8rem;
+  font-size: 0.9rem;
+}
+
+.btn-logout {
+  background: #e63946;
+  color: white;
+  margin-right: 0;
+}

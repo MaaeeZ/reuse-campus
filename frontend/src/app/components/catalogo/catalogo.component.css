@@ -1,0 +1,41 @@
+.filtros {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.filtros select {
+  margin: 0;
+}
+
+.form-box h3 {
+  margin-top: 0;
+}
+
+.item-card h3 {
+  margin-top: 0.8rem;
+  margin-bottom: 0.4rem;
+}
+
+.item-card small {
+  color: #555;
+}
+
+.actions {
+  margin-top: 1rem;
+}
+
+.solicitar-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.solicitar-box input {
+  margin: 0;
+}
+
+.solicitar-box button {
+  align-self: flex-start;
+  margin-right: 0;
+}

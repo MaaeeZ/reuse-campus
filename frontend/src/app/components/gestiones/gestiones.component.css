@@ -1,0 +1,13 @@
+h2 {
+  margin-bottom: 1.2rem;
+}
+
+section.card h3 {
+  margin-top: 0;
+  color: #1b4332;
+}
+
+section.card p {
+  color: #666;
+  margin: 0.4rem 0 0;
+}

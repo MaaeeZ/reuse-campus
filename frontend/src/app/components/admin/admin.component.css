@@ -1,0 +1,9 @@
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #1b4332;
+}
+
+.card p {
+  color: #666;
+}
